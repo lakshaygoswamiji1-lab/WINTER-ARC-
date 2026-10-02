@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Winter Arc Challenge — Transform yourself this winter with disciplined daily habits, intense training, and relentless self-improvement." />
+  <meta name="theme-color" content="#0a0e1a" />
+
+  <title>Winter Arc Challenge</title>
+
+  <!-- Google Fonts: Bebas Neue (title) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Fixed full-page background (iOS-safe) -->
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════
+       STICKY HEADER
+       ═══════════════════════════════════════════════════ -->
+  <header id="site-header" class="site-header" role="banner">
+    <div class="header__inner">
+      <a href="#hero" class="header__brand" aria-label="Back to top">
+        <span class="header__title">WINTER ARC</span>
+        <span class="header__badge">CHALLENGE</span>
+      </a>
+      <div id="header-quote" class="header__quote" aria-live="polite" aria-atomic="true">
+        <span id="header-quote-text" class="header__quote-text"></span>
+      </div>
+      <div class="header__right">
+        <div class="header__user" id="header-user" aria-label="User name"></div>
+        <div id="header-streak" class="header__streak" aria-live="polite">
+          <div class="streak__main">
+            <span class="streak__flame" aria-hidden="true">🔥</span>
+          <span id="streak-number" class="streak__number">0</span>
+          <span class="streak__label">DAY STREAK</span>
+        </div>
+        <div class="streak__best">
+          <span>BEST: </span><span id="streak-best">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════ -->
+  <section id="hero" class="hero" aria-label="Winter Arc Challenge hero banner">
+    <canvas id="snow-canvas" class="hero__snow" aria-hidden="true"></canvas>
+    <div class="hero__content">
+      <header class="hero__titles">
+        <h1 id="main-title" class="hero__title" aria-label="Winter Arc">WINTER ARC</h1>
+        <p id="subtitle" class="hero__subtitle" aria-label="Challenge"></p>
+      </header>
+      <div id="hero-countdown" class="hero__countdown" aria-live="polite" hidden></div>
+      <div class="hero__divider" aria-hidden="true"></div>
+      <p class="hero__tagline">Embrace the cold. Forge the iron. Become unbreakable.</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       APP ROOT — Tabs + Content
+       ═══════════════════════════════════════════════════ -->
+  <main id="app-root" class="app-root">
+
+    <!-- Sticky tab bar -->
+    <nav class="tab-bar" role="tablist" aria-label="Tracker sections">
+      <button class="tab-btn is-active" role="tab" id="tab-scorecard" aria-selected="true" aria-controls="panel-scorecard" tabindex="0">SCORECARD</button>
+      <button class="tab-btn" role="tab" id="tab-analysis" aria-selected="false" aria-controls="panel-analysis" tabindex="-1">ANALYSIS</button>
+      <button class="tab-btn" role="tab" id="tab-logs" aria-selected="false" aria-controls="panel-logs" tabindex="-1">LOGS</button>
+    </nav>
+
+    <!-- ─── SCORECARD TAB ────────────────────────────── -->
+    <div class="glass-panel tab-panel" role="tabpanel" id="panel-scorecard" aria-labelledby="tab-scorecard">
+      <div class="panel__header">
+        <h2 class="panel__title">SCORECARD</h2>
+        <button id="btn-reset-all" class="btn btn--danger-ghost" type="button" title="Reset all data permanently">Reset All Data</button>
+      </div>
+      <div id="scorecard-summary" class="scorecard__summary" role="status"></div>
+      <div class="scorecard__table-wrap">
+        <table id="scorecard-table" class="scorecard__table" role="grid">
+          <thead id="scorecard-thead"></thead>
+          <tbody id="scorecard-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─── ANALYSIS TAB ─────────────────────────────── -->
+    <div class="glass-panel tab-panel" role="tabpanel" id="panel-analysis" aria-labelledby="tab-analysis" hidden>
+      
+      <!-- Screen & Instagram Time Section -->
+      <div class="panel__header">
+        <h2 class="panel__title">SCREEN TIME VS INSTAGRAM</h2>
+      </div>
+      <div class="chart-controls" role="group" aria-label="Usage chart controls">
+        <div class="controls-group">
+          <button class="range-btn is-active" data-range="7" data-target="screen">7 DAYS</button>
+          <button class="range-btn" data-range="30" data-target="screen">30 DAYS</button>
+          <button class="range-btn" data-range="all" data-target="screen">ALL</button>
+        </div>
+        <div class="chart-legend" id="usage-chart-legend">
+          <button class="legend-btn" aria-pressed="true" data-line="screen"><span class="legend-swatch swatch-screen"></span>Screen</button>
+          <button class="legend-btn" aria-pressed="true" data-line="instagram"><span class="legend-swatch swatch-instagram"></span>Instagram</button>
+        </div>
+      </div>
+      <div id="chart-container-screen" class="chart-container" aria-label="Usage chart"></div>
+      
+      <div class="analysis-divider"></div>
+
+      <!-- Sleep Analysis Section -->
+      <div class="panel__header">
+        <h2 class="panel__title">SLEEP ANALYSIS</h2>
+      </div>
+      <div class="chart-controls" role="group" aria-label="Sleep chart controls">
+        <div class="controls-group">
+          <button class="range-btn is-active" data-range="7" data-target="sleep">7 DAYS</button>
+          <button class="range-btn" data-range="30" data-target="sleep">30 DAYS</button>
+          <button class="range-btn" data-range="all" data-target="sleep">ALL</button>
+        </div>
+      </div>
+      <div id="chart-container-sleep" class="chart-container" aria-label="Sleep duration chart"></div>
+    </div>
+
+    <!-- ─── LOGS TAB ─────────────────────────────────── -->
+    <div class="glass-panel tab-panel" role="tabpanel" id="panel-logs" aria-labelledby="tab-logs" hidden>
+      
+      <div class="panel__header panel__header--logs">
+        <h2 class="panel__title">LOGS</h2>
+        <div class="date-picker-wrap">
+          <label for="logs-date" class="sr-only">Date</label>
+          <input type="date" id="logs-date" class="date-picker" />
+        </div>
+      </div>
+
+      <!-- Sleep Log -->
+      <section class="log-section">
+        <h3 class="log-section__title">SLEEP LOG</h3>
+        <div class="sleep-input-card">
+          <div class="sleep-input-group">
+            <label>Slept at</label>
+            <input type="time" id="sleep-at-input" class="time-input" />
+          </div>
+          <div class="sleep-input-group">
+            <label>Woke up at</label>
+            <input type="time" id="wake-at-input" class="time-input" />
+          </div>
+          <button class="btn btn--primary" id="btn-save-sleep">SAVE</button>
+        </div>
+        
+        <div id="sleep-dashboard" class="sleep-dashboard">
+          <!-- Arc and trend injected here -->
+        </div>
+
+        <div id="sleep-history-list" class="sleep-history-list"></div>
+      </section>
+
+      <div class="analysis-divider"></div>
+
+      <!-- Weight Log -->
+      <section class="log-section">
+        <h3 class="log-section__title">WEIGHT LOG</h3>
+        <div class="weight-input-card">
+          <div class="weight-input-group">
+            <label>Body weight</label>
+            <div class="weight-input-wrapper">
+              <input type="number" id="weight-input" class="number-input" step="0.1" min="0" inputmode="decimal" placeholder="e.g. 72.5" />
+              <span class="weight-unit" id="weight-unit-label">kg</span>
+            </div>
+          </div>
+          <button class="btn btn--primary" id="btn-save-weight">SAVE</button>
+        </div>
+        <div id="weight-error" class="weight-error" aria-live="polite"></div>
+        <div id="weight-summary" class="weight-summary"></div>
+        <div id="weight-history-list" class="weight-history-list"></div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
